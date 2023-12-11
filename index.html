@@ -12,12 +12,12 @@
     
     <nav class="navbar navbar-light bg-light">
         <div class="container d-flex justify-content-end">
-            <button class="btn btn-success mr-2 " onclick="document.getElementById('id01').style.display='block'" style="display: block" id="aggiungi">Aggiungi</button>
+            <button class="btn btn-success mr-2 " onclick="document.getElementById('id01').style.display='block'" style="display: none" id="aggiungi">Aggiungi</button>
             <div class=" justify-content-end mr-5">
                 <div id="auth-container" class="d-flex m-3">    
                     <input type="text" id="username" placeholder="Inserisci il tuo username" class="form-control mr-2">
                     <button onclick="authenticateUser()" class="btn btn-primary" id="login">Login</button>
-                    <button onclick="authenticateUser()" class="btn btn-primary" style="display: none" id="logout">Logout</button>
+                    <button onclick="logoutUser()()" class="btn btn-primary" style="display: none" id="logout">Logout</button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
             class="w3-button w3-display-topright">&times;</span>
             <div class="container">
                 <h2>Create a New Course</h2>
-                <form id="courseForm" class="p-3">
+                <form id="courseForm" class="p-3" onsubmit="event.preventDefault(); createCourse();">
                     <div class="form-group row">
                         <div class="col">
                             <label for="title"><b>Title:</b></label>
@@ -64,7 +64,7 @@
                     </div>
             
                     <div class="d-flex justify-content-center mt-4 mb-4">
-                        <button type="button" class="btn btn-primary" onclick="createCourse()">Create Course</button>
+                        <button type="submit" class="btn btn-primary">Create Course</button>
                     </div>
                 </form>
             </div>

@@ -25,6 +25,7 @@ function createCourse(/*{ title, description, srcImage, categories }*/) {
     document.getElementById('image').value = '';
     document.getElementById('categories').value = '';
     visualizza();
+    saveCoursesInLocalStorage();
 }
 
 // Funzione per modificare un corso esistente
@@ -52,6 +53,7 @@ function deleteCourse(id) {
     getCategories();
     visualizza();
     closeModal();
+    saveCoursesInLocalStorage();
 }
 //function deleteCourse(id) {
 //    courses = courses.filter(course => course.id !== id || course.author !== username);
@@ -117,7 +119,7 @@ function visualizza(){
         htmlString += `<div class="container d-flex flex-wrap justify-content-start mb-5 mt-5">`;
         
         coursesForCategory.forEach((course) => {
-            const truncatedDescription = course.description.length > 100 ?
+            const truncatedDescription = course.description.length > 23 ?
                 course.description.substring(0, 23) + '...' :
                 course.description;
 
@@ -241,7 +243,27 @@ function updateCourse(courseId) {
     // Aggiorna la visualizzazione e chiudi il modale
     visualizza();
     closeModal();
+    saveCoursesInLocalStorage();
+}
+
+// Funzione per caricare i corsi dal localStorage
+function loadCoursesFromLocalStorage() {
+    const coursesLocalStorage = localStorage.getItem("courses");
+
+    if (coursesLocalStorage === null) {
+        courses = [];
+    } else {
+        courses = JSON.parse(coursesLocalStorage);
+    }
+}
+
+// Funzione per salvare i corsi nel localStorage
+function saveCoursesInLocalStorage() {
+    localStorage.setItem("courses", JSON.stringify(courses));
 }
 
 // Carica la funzione di visualizzazione al caricamento della pagina
-window.onload = () => visualizza();
+window.onload = () => {
+    loadCoursesFromLocalStorage();
+    visualizza();
+}

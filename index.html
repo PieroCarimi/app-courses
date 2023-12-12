@@ -17,13 +17,13 @@
                 <div id="auth-container" class="d-flex m-3">    
                     <input type="text" id="username" placeholder="Inserisci il tuo username" class="form-control mr-2">
                     <button onclick="authenticateUser()" class="btn btn-primary" id="login">Login</button>
-                    <button onclick="logoutUser()()" class="btn btn-primary" style="display: none" id="logout">Logout</button>
+                    <button onclick="logoutUser()" class="btn btn-primary" style="display: none" id="logout">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container mt-5" id="contenitore">
         
     </div>
 
@@ -72,6 +72,17 @@
         </div>
       </div>
     
+
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h2 id="courseModalLabel"></h2>
+                <div id="courseDetails"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

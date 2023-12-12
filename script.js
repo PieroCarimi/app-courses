@@ -1,7 +1,7 @@
 // Struttura dati
 let username = "";
 let courses = [];
-var id = 1;
+//var id = 1;
 
 // Funzione per aggiungere un nuovo corso
 function createCourse(/*{ title, description, srcImage, categories }*/) {
@@ -9,9 +9,12 @@ function createCourse(/*{ title, description, srcImage, categories }*/) {
     const description = document.getElementById('description').value;
     const srcImage = document.getElementById('image').value;
     const categoriesInput = document.getElementById('categories').value;
+    
     const categoriesArray = categoriesInput.split(',').map(category => category.trim());
+    const maxId = Math.max(...courses.map(course => course.id), 0);
+    
     const newCourse = {
-        id: id++,
+        id: maxId + 1,
         title,
         description,
         srcImage,

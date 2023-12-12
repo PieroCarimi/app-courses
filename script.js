@@ -77,6 +77,7 @@ function getCategories() {
     return categories;
 }
 
+// Funzione per autenticare l'utente
 function authenticateUser() {
     const enteredUsername = document.getElementById("username").value;
 
@@ -104,17 +105,14 @@ function logoutUser() {
 }
 getCategories();
 
+// Funzione per visualizzare i corsi nella pagina
 function visualizza(){
     const contenitore = document.getElementById("contenitore");
     const categories = [...getCategories()];
     let htmlString = "";
-    let courseByCategory = []
-
-    
 
     categories.forEach((category) => {
         htmlString += "<h2><b>"+category+"</b></h2>";
-        //courseByCategory = [...getCoursesByCategory(category)];
         const coursesForCategory = getCoursesByCategory(category).slice(0, 4);
         htmlString += `<div class="container d-flex flex-wrap justify-content-start mb-5 mt-5">`;
         
@@ -129,7 +127,7 @@ function visualizza(){
                     <div class="card-body">
                         <h5 class="card-title"><b>${course.title}</b></h5>
                         <p class="card-text">${truncatedDescription}</p>
-                        <button class="btn btn-primary" onclick="openModal(${course.id})">Details</button>
+                        <button class="btn btn-primary" onclick="openModal(${course.id})">Dettagli</button>
                     </div>
                 </div>`;
         });
@@ -141,6 +139,7 @@ function visualizza(){
     contenitore.innerHTML = htmlString;
 }
 
+// Funzione per aprire la finestra modale con i dettagli di un corso
 function openModal(courseId) {
     const course = courses.find(course => course.id === courseId);
     document.getElementById("courseModalLabel").innerText = course.title;
@@ -153,11 +152,11 @@ function openModal(courseId) {
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">${course.title}</h5>
-                    <p class="card-text"><small class="text-muted">Description:${course.description}</small></p>
+                    <p class="card-text"><small class="text-muted">Description: ${course.description}</small></p>
                     <p class="card-text"><small class="text-muted">Author: ${course.author}</small></p>
                     <p class="card-text"><small class="text-muted">Categories: ${course.categories.join(', ')}</small></p>
                     ${course.author === username ? `<button class="btn btn-outline-secondary" onclick="editCourseModal(${course.id})">Edit</button>` : ''}
-                    <button class="btn btn-outline-dark" onclick="closeModal()">Close</button>
+                    <button class="btn btn-outline-dark" onclick="closeModal()">Chiudi</button>
                 </div>
             </div>
         </div>
@@ -171,16 +170,19 @@ function openModal(courseId) {
     modalOverlay.addEventListener('click', closeModalOverlay);
 }
 
+// Funzione per chiudere la finestra modale
 function closeModal() {
     document.getElementById('id02').style.display = 'none';
 }
 
+// Funzione per chiudere la finestra modale cliccando sull'overlay
 function closeModalOverlay(event) {
     if (event.target === document.getElementById('id02')) {
         closeModal();
     }
 }
 
+// Funzione per aprire la finestra modale di modifica di un corso
 function editCourseModal(courseId) {
     const course = courses.find(course => course.id === courseId);
 
@@ -219,6 +221,7 @@ function editCourseModal(courseId) {
     </div>`;
 }
 
+// Funzione per aggiornare un corso dopo la modifica
 function updateCourse(courseId) {
     const course = courses.find(course => course.id === courseId);
 
@@ -240,4 +243,5 @@ function updateCourse(courseId) {
     closeModal();
 }
 
+// Carica la funzione di visualizzazione al caricamento della pagina
 window.onload = () => visualizza();

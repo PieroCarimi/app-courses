@@ -51,6 +51,7 @@ function deleteCourse(id) {
     }
     getCategories();
     visualizza();
+    closeModal();
 }
 //function deleteCourse(id) {
 //    courses = courses.filter(course => course.id !== id || course.author !== username);
@@ -119,7 +120,7 @@ function visualizza(){
         
         coursesForCategory.forEach((course) => {
             const truncatedDescription = course.description.length > 100 ?
-                course.description.substring(0, 100) + '...' :
+                course.description.substring(0, 23) + '...' :
                 course.description;
 
             htmlString +=
@@ -155,7 +156,8 @@ function openModal(courseId) {
                     <p class="card-text"><small class="text-muted">Description:${course.description}</small></p>
                     <p class="card-text"><small class="text-muted">Author: ${course.author}</small></p>
                     <p class="card-text"><small class="text-muted">Categories: ${course.categories.join(', ')}</small></p>
-                    <button class="btn btn-secondary w3-button" onclick="closeModal()">Close</button>
+                    ${course.author === username ? `<button class="btn btn-outline-secondary" onclick="editCourseModal(${course.id})">Edit</button>` : ''}
+                    <button class="btn btn-outline-dark" onclick="closeModal()">Close</button>
                 </div>
             </div>
         </div>
@@ -177,6 +179,65 @@ function closeModalOverlay(event) {
     if (event.target === document.getElementById('id02')) {
         closeModal();
     }
+}
+
+function editCourseModal(courseId) {
+    const course = courses.find(course => course.id === courseId);
+
+    document.getElementById("courseDetails").innerHTML = `
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="${course.srcImage}" class="card-img" alt="Course Image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <input type="text" id="editTitle" value="${course.title}">
+                    </h5>
+                    <p class="card-text">
+                        <textarea id="editDescription">${course.description}</textarea>
+                    </p>
+                    <p class="card-text">
+                        <input type="text" id="editCategories" value="${course.categories.join(', ')}">
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 h-100 d-flex justify-content-center align-items-center mb-4">
+                <label for="editImage">Img URL:</label>
+                <input type="text" id="editImage" value="${course.srcImage}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="h-100 d-flex justify-content-center align-items-center mb-4">
+                <button class="btn btn-outline-secondary" onclick="updateCourse(${course.id})">Modifica</button>
+                <button class="btn btn-outline-danger" onclick="deleteCourse(${course.id})">Cancella</button>
+            </div>
+        </div>
+    </div>`;
+}
+
+function updateCourse(courseId) {
+    const course = courses.find(course => course.id === courseId);
+
+    const updatedTitle = document.getElementById("editTitle").value;
+    const updatedDescription = document.getElementById("editDescription").value;
+    const updatedCategories = document.getElementById("editCategories").value.split(',').map(category => category.trim());
+    const updatedImage = document.getElementById("editImage").value;
+
+    // Applica le modifiche al corso
+    editCourse(courseId, {
+        title: updatedTitle,
+        description: updatedDescription,
+        categories: updatedCategories.join(', '),
+        srcImage: updatedImage,
+    });
+
+    // Aggiorna la visualizzazione e chiudi il modale
+    visualizza();
+    closeModal();
 }
 
 window.onload = () => visualizza();

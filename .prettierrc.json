@@ -1,8 +1,8 @@
 {
-    "singleQuote": true,
-    "trailinComma": "all",
-    "arrowParens": "avoid",
-    "insertPragm": true,
-    "tabWidth": 2,
-    "printWidth": 120
+  "singleQuote": true,
+  "trailinComma": "all",
+  "arrowParens": "avoid",
+  "insertPragm": true,
+  "tabWidth": 2,
+  "printWidth": 120
 }
